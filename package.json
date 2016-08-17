@@ -1,0 +1,15 @@
+{
+  "name": "primes",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/primes.js",
+  "dependencies": {},
+  "devDependencies": {
+    "jasmine": "^2.4.1"
+  },
+  "scripts": {
+    "test": "jasmine"
+  },
+  "author": "",
+  "license": "ISC"
+}
