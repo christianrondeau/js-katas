@@ -9,7 +9,11 @@ function reduce(r,n,d) {
 module.exports = function(n) {
   var d = 2;	
 	var r = [];
-	n = reduce(r,n,d);
-	r.push(n);
+	var c = n;
+	do {
+		var c2 = reduce(r,c,d);
+		if(c !== c2) r.push(c = c2);
+		d++;
+	} while(d < c)
 	return r;
 }
