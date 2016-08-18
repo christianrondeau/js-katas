@@ -1,10 +1,15 @@
+function reduce(r,n,d) {
+	while(n > d && n % d === 0) {
+		var n = n / d;
+		r.push(d);
+	}
+	return n;
+}
+
 module.exports = function(n) {
   var d = 2;	
 	var r = [];
-	while(n > 2 && n % 2 === 0) {
-		n = n / 2;
-		r.push(2);
-	}
+	n = reduce(r,n,d);
 	r.push(n);
 	return r;
 }

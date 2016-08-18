@@ -17,4 +17,8 @@ describe("primes generator", function() {
 	it("8 -> 2,2,2", function() {
 		expect(primes(8)).toEqual([2,2,2]);
 	});
+
+	it("9 -> 3,3", function() {
+		expect(primes(9)).toEqual([3,3]);
+	});
 });
