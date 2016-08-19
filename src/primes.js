@@ -11,9 +11,9 @@ module.exports = function(n) {
 	var r = [];
 	var c = n;
 	do {
-		var c2 = reduce(r,c,d);
-		if(c !== c2) r.push(c = c2);
+		c = reduce(r,c,d);
 		d++;
 	} while(d < c)
+	if(c !== n) r.push(c);
 	return r;
 }
