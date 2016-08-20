@@ -1,2 +1,2 @@
 #!/data/data/com.termux/files/usr/bin/bash
-vim -S Session.vim
+vim -s session.vim
