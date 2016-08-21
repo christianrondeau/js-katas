@@ -1,5 +1,5 @@
 require('jasmine');
-			var roman = require('../src/roman');
+				var roman = require('../src/roman');
 
 describe("roman numbers generator", function() {
 	it("1 -> I", function() {
@@ -32,5 +32,13 @@ describe("roman numbers generator", function() {
 
 	it("7 -> VII", function() {
 		expect(roman(7)).toEqual('VII');
+	});
+
+	it("1676 -> MDCLXVI", function() {
+		expect(roman(7)).toEqual('VII');
+	});
+
+	it("99 -> XCIX", function() {
+		expect(roman(99)).toEqual('XCIX');
 	});
 });

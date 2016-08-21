@@ -1,5 +1,5 @@
-var numbers = [ 10,  5,   1 ];
-var letters = ['X', 'V', 'I'];
+var numbers = [ 1000, 500, 100, 50,  10,  5,   1 ];
+var letters = ['M',  'D', 'C', 'L', 'X', 'V', 'I'];
 
 function roman(n) {
 	var r = '';
