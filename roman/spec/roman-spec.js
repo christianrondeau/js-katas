@@ -5,6 +5,7 @@ describe("roman numbers generator", function() {
 	it("1 -> I", function() {
 		expect(roman(1)).toEqual('I');
 	});
+<<<<<<< HEAD
 
 	it("2 -> II", function() {
 		expect(roman(2)).toEqual('II');
@@ -33,4 +34,6 @@ describe("roman numbers generator", function() {
 	it("7 -> VII", function() {
 		expect(roman(7)).toEqual('VII');
 	});
+=======
+>>>>>>> 32730d280ee781e91ba0dfbc7b7d07d196808fb3
 });

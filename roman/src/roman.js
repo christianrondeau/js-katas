@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 var numbers = [ 10,  5,   1 ];
 var letters = ['X', 'V', 'I'];
 
@@ -22,3 +23,8 @@ function roman(n) {
 }
 
 module.exports = roman;
+=======
+module.exports = function roman(n) {
+	return 'I';
+}
+>>>>>>> 32730d280ee781e91ba0dfbc7b7d07d196808fb3
