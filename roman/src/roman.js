@@ -1,22 +1,42 @@
-var numbers = [ 1000, 500, 100, 50,  10,  5,   1 ];
-var letters = ['M',  'D', 'C', 'L', 'X', 'V', 'I'];
+var numbers = [1, 5, 10];
+var lettersByDigit = [
+	['I', 'V', 'X'],
+	['X', 'L', 'C'],
+	['C', 'D', 'M']
+];
 
 function roman(n) {
 	var r = '';
-	for(var index = 0; index < numbers.length; index++) {
-		var currentNumber = numbers[index];
-		while(n >= currentNumber) {
-			r = r + letters[index];
-			n -= currentNumber;
+	var ns = '' + n;
+	for(var index = 0; index < ns.length; index++) {
+		var nd = parseInt(ns[ns.length - index - 1]);
+		if(index >= lettersByDigit.length) {
+			r = lettersByDigit[lettersByDigit.length - 1][2].repeat(nd * Math.pow(10, index - lettersByDigit.length)) + r;
+			continue;
+		}
+		var letters = lettersByDigit[index];
+
+		if(nd === numbers[2] - numbers[0])
+		{
+			r = letters[0] + letters[2] + r;
+			continue;
 		}
 
-		for(var nextIndex = index + 1; nextIndex <= numbers.length; nextIndex++){
-			var nextNumber = numbers[nextIndex];
-			if(n !== nextNumber && n === currentNumber - nextNumber) {
-				r = letters[nextIndex] + letters[index]  + r;
-				n -= currentNumber - nextNumber;
-			}
+		if(nd === numbers[1] - numbers[0])
+		{
+			r = letters[0] + letters[1] + r;
+			continue;
 		}
+
+		var rd = '';
+		if(nd >= numbers[1])
+		{
+			rd += letters[1];
+			nd -= numbers[1];
+		}
+
+		rd += letters[0].repeat(nd);
+		r = rd + r;
 	}
 	return r;
 }
