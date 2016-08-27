@@ -1,0 +1,4 @@
+#!/data/data/com.termux/files/usr/bin/bash
+node test.js
+cp node_modules/d3/build/d3.min.js /data/data/com.termux/files/home/storage/shared/katas/d3fiddle/
+cp out/index.html /data/data/com.termux/files/home/storage/shared/katas/d3fiddle/

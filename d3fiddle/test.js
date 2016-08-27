@@ -19,7 +19,7 @@ jsdom.env({
 			.attr('width', 600)
 			.attr('height', 300)
 			.append('circle')
-			.attr('cx', 300)
+			.attr('cx', 150)
 			.attr('cy', 150)
 			.attr('r', 30)
 			.attr('fill', '#26963c')
@@ -34,7 +34,7 @@ jsdom.env({
 
 		// save result in an html file, we could also keep it in memory, or export the interesting fragment into a database for later use
 		var svgsrc = window.document.documentElement.innerHTML
-		fs.writeFile('/data/data/com.termux/files/home/storage/shared/katas/d3fiddle/index.html', svgsrc, function(err) {
+		fs.writeFile('out/index.html', svgsrc, function(err) {
 			if(err) {
 				console.log('error saving document', err)
 			} else {
