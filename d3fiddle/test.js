@@ -1,7 +1,7 @@
 var d3 = require('d3')
 	, jsdom = require('jsdom')
 	, fs = require('fs')
-	, htmlStub = '<html><head></head><body><div id="dataviz-container"></div><script src="js/d3.v3.min.js"></script></body></html>'
+	, htmlStub = '<html><head></head><body><div id="dataviz-container"></div><script src="d3.v3.min.js"></script></body></html>'
 
 jsdom.env({
 	features : { QuerySelector : true }
