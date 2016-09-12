@@ -9,4 +9,8 @@ describe("pooregex", function() {
 	it("can fail finding a letter", function() {
 		expect(pooregex("b", "a")).toEqual({ success: false, matches: [] });
 	});
+
+	it("can find a letter among others", function() {
+		expect(pooregex("abc", "b")).toEqual({ success: true, matches: [ "b" ] });
+	});
 });
