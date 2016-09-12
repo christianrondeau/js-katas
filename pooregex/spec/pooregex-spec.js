@@ -13,4 +13,8 @@ describe("pooregex", function() {
 	it("can find a letter among others", function() {
 		expect(pooregex("abc", "b")).toEqual({ success: true, matches: [ "b" ] });
 	});
+
+	it("can find multiple letters among others", function() {
+		expect(pooregex("abcd", "bc")).toEqual({ success: true, matches: [ "bc" ] });
+	});
 });
