@@ -9,10 +9,11 @@ function pooregex(s, r)
 		if(c === t) {
 			m += c;
 			t = r[++ri];
+		} else if(m) {
+			break;
 		}
 	}
-
-	if(m) {
+	if(m && ri == r.length) {
 		return {
 			success: true,
 			matches: [ m ]

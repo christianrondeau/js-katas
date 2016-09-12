@@ -17,4 +17,8 @@ describe("pooregex", function() {
 	it("can find multiple letters among others", function() {
 		expect(pooregex("abcd", "bc")).toEqual({ success: true, matches: [ "bc" ] });
 	});
+
+	it("can stop when pattern ends", function() {
+		expect(pooregex("abab", "bb")).toEqual({ success: false, matches: [] });
+	});
 });
