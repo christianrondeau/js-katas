@@ -9,17 +9,24 @@ RegexReader.prototype.isMatchComplete = function() {
 	return this.index == this.regex.length;
 }
 
+function StringReader(value) {
+	this.index = -1;
+	this.value = value;
+}
+StringReader.prototype.next = function() {
+	this.char = this.value[++this.index];
+	return this.char;
+}
+
 function pooregex(s, r) 
 {
 	var m = "";
-	var si = -1;
-	var ri = 0;
+	var stringReader = new StringReader(s);
 	var regexReader = new RegexReader(r);
 	regexReader.next();
-	while(++si < s.length) {
-		var c = s[si];
-		if(c === regexReader.token) {
-			m += c;
+	while(stringReader.next()) {
+		if(stringReader.char === regexReader.token) {
+			m += stringReader.char;
 			regexReader.next();
 		} else if(m) {
 			break;
