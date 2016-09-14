@@ -4,10 +4,10 @@ function RegexReader(regex) {
 }
 RegexReader.prototype.next = function() {
 	this.token = this.regex[++this.index];
-}
+};
 RegexReader.prototype.isMatchComplete = function() {
 	return this.index == this.regex.length;
-}
+};
 
 function StringReader(value) {
 	this.index = -1;
@@ -15,24 +15,25 @@ function StringReader(value) {
 }
 StringReader.prototype.next = function() {
 	this.char = this.value[++this.index];
-	return this.char;
-}
+	return this.value.length > this.index;
+};
 
-function pooregex(s, r) 
-{
+function Pooregex(regex) {
+	this.regexReader = new RegexReader(regex);
+}
+Pooregex.prototype.match = function(value) {
 	var m = "";
-	var stringReader = new StringReader(s);
-	var regexReader = new RegexReader(r);
-	regexReader.next();
+	var stringReader = new StringReader(value);
+	this.regexReader.next();
 	while(stringReader.next()) {
-		if(stringReader.char === regexReader.token) {
+		if(stringReader.char === this.regexReader.token) {
 			m += stringReader.char;
-			regexReader.next();
+			this.regexReader.next();
 		} else if(m) {
 			break;
 		}
 	}
-	if(m && regexReader.isMatchComplete()) {
+	if(m && this.regexReader.isMatchComplete()) {
 		return {
 			success: true,
 			matches: [ m ]
@@ -43,6 +44,6 @@ function pooregex(s, r)
 			matches: []
 		};
 	}
-}
+};
 
-module.exports = pooregex;
+module.exports = Pooregex;

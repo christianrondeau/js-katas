@@ -1,24 +1,24 @@
 require('jasmine');
-var pooregex = require('../src/pooregex');
+var Pooregex = require('../src/pooregex');
 
-describe("pooregex", function() {
+describe("Pooregex", function() {
 	it("can find a letter", function() {
-		expect(pooregex("a", "a")).toEqual({ success: true, matches: ["a"] });
+		expect(new Pooregex("a").match("a")).toEqual({ success: true, matches: ["a"] });
 	});
 
 	it("can fail finding a letter", function() {
-		expect(pooregex("b", "a")).toEqual({ success: false, matches: [] });
+		expect(new Pooregex("a").match("b")).toEqual({ success: false, matches: [] });
 	});
 
 	it("can find a letter among others", function() {
-		expect(pooregex("abc", "b")).toEqual({ success: true, matches: [ "b" ] });
+		expect(new Pooregex("b").match("abc")).toEqual({ success: true, matches: [ "b" ] });
 	});
 
 	it("can find multiple letters among others", function() {
-		expect(pooregex("abcd", "bc")).toEqual({ success: true, matches: [ "bc" ] });
+		expect(new Pooregex("bc").match("abcd")).toEqual({ success: true, matches: [ "bc" ] });
 	});
 
-	it("can stop when pattern ends", function() {
-		expect(pooregex("abab", "bb")).toEqual({ success: false, matches: [] });
+	it("can match but stop when pattern ends", function() {
+		expect(new Pooregex("bb").match("abab")).toEqual({ success: false, matches: [] });
 	});
 });
