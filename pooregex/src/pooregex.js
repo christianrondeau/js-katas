@@ -1,22 +1,5 @@
-function RegexReader(regex) {
-	this.index = -1;
-	this.regex = regex;
-}
-RegexReader.prototype.next = function() {
-	this.token = this.regex[++this.index];
-};
-RegexReader.prototype.isMatchComplete = function() {
-	return this.index == this.regex.length;
-};
-
-function StringReader(value) {
-	this.index = -1;
-	this.value = value;
-}
-StringReader.prototype.next = function() {
-	this.char = this.value[++this.index];
-	return this.value.length > this.index;
-};
+var StringReader = require("./string-reader");
+var RegexReader = require("./regex-reader");
 
 function Pooregex(regex) {
 	this.regexReader = new RegexReader(regex);
