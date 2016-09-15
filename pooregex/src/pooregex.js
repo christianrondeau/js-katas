@@ -9,7 +9,7 @@ Pooregex.prototype.match = function(value) {
 	var stringReader = new StringReader(value);
 	this.regexReader.next();
 	while(stringReader.next()) {
-		if(stringReader.char === this.regexReader.token) {
+		if(this.regexReader.isMatch(stringReader.char)) {
 			m += stringReader.char;
 			this.regexReader.next();
 		} else if(m) {

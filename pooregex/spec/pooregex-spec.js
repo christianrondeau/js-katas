@@ -26,4 +26,8 @@ describe("Pooregex", function() {
 	it("can match but stop when pattern ends", function() {
 		expect(new Pooregex("bb").match("abab")).not.toPoomatch();
 	});
+
+	it("can match '.'", function() {
+		expect(new Pooregex("b.d").match("abcde")).toPoomatch(["bcd"]);
+	});
 });

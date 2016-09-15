@@ -9,5 +9,12 @@ RegexReader.prototype.next = function() {
 RegexReader.prototype.isMatchComplete = function() {
 	return this.index == this.regex.length;
 };
+RegexReader.prototype.isMatch = function(char) {
+	if(this.token === ".") {
+		return true;
+	}
+
+	return char === this.token;
+}
 
 module.exports = RegexReader;
