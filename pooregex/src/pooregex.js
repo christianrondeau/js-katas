@@ -7,13 +7,18 @@ function Pooregex(regex) {
 Pooregex.prototype.match = function(value) {
 	var m = "";
 	var stringReader = new StringReader(value);
-	this.regexReader.next();
+	this.regexReader.begin();
 	while(stringReader.next()) {
-		if(this.regexReader.isMatch(stringReader.char)) {
+		if(this.regexReader.doMatch(stringReader.char)) {
 			m += stringReader.char;
-			this.regexReader.next();
-		} else if(m) {
-			break;
+			if(this.regexReader.isMatchComplete()) {
+				break;
+			}
+		} else {
+			this.regexReader.begin();
+			if(m) {
+				m = "";	
+			}
 		}
 	}
 	if(m && this.regexReader.isMatchComplete()) {

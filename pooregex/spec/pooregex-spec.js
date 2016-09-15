@@ -23,11 +23,19 @@ describe("Pooregex", function() {
 		expect(new Pooregex("bc").match("abcd")).toPoomatch([ "bc" ]);
 	});
 
-	it("can match but stop when pattern ends", function() {
+	it("can partial match but stop when pattern ends", function() {
 		expect(new Pooregex("bb").match("abab")).not.toPoomatch();
 	});
 
 	it("can match '.'", function() {
 		expect(new Pooregex("b.d").match("abcde")).toPoomatch(["bcd"]);
+	});
+
+	it("can match escaped characters", function() {
+		expect(new Pooregex("b\\\\c").match("a\\b\\c\\d")).toPoomatch(["b\\c"]);
+	});
+
+	it("can match repeated (+) characters", function() {
+		expect(new Pooregex("ab+c").match("aaabbbccc")).toPoomatch(["abbbc"]);
 	});
 });

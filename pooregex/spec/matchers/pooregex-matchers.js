@@ -8,7 +8,7 @@ var pooregexMatchers = {
 				if(!expected) {
 					result.pass = actual.success;
 					if(result.pass) {
-						result.message = "Expected not to match";
+						result.message = "Expected not to match. Matched: '" + actual.matches + "'";
 					} else {
 						result.message = "Expected to match something";
 					}
