@@ -1,3 +1,5 @@
+"use strict";
+
 require("jasmine");
 var pooregexMatchers = require("./pooregex-matchers");
 
