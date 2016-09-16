@@ -38,4 +38,8 @@ describe("Pooregex", function() {
 	it("can match repeated (+) characters", function() {
 		expect(new Pooregex("ab+c").match("aaabbbccc")).toPoomatch(["abbbc"]);
 	});
+
+	it("can match repeated characters on whole string", function() {
+		expect(new Pooregex("a+").match("aaa")).toPoomatch(["aaa"]);
+	});
 });

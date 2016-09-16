@@ -11,7 +11,7 @@ Pooregex.prototype.match = function(value) {
 	while(stringReader.next()) {
 		if(this.regexReader.doMatch(stringReader.char)) {
 			m += stringReader.char;
-			if(this.regexReader.isMatchComplete()) {
+			if(this.regexReader.isMatchComplete(false)) {
 				break;
 			}
 		} else {
@@ -21,7 +21,7 @@ Pooregex.prototype.match = function(value) {
 			}
 		}
 	}
-	if(m && this.regexReader.isMatchComplete()) {
+	if(m && this.regexReader.isMatchComplete(true)) {
 		return {
 			success: true,
 			matches: [ m ]

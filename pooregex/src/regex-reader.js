@@ -20,6 +20,7 @@ RegexReader.prototype.next = function() {
 	}
 
 	var peek = this.regex[this.index + 1];
+
 	if(peek === "+") {
 		this.index++;
 		this.repeat = -1;
@@ -28,8 +29,9 @@ RegexReader.prototype.next = function() {
 	}
 };
 
-RegexReader.prototype.isMatchComplete = function() {
-	return this.index === this.regex.length;
+RegexReader.prototype.isMatchComplete = function(stringComplete) {
+	var complete = this.index === this.regex.length || (stringComplete && this.index === this.regex.length - 1 && this.repeat < 0);
+	return complete;
 };
 
 RegexReader.prototype.isMatch = function(char) {
