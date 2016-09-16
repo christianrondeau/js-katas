@@ -6,13 +6,14 @@ function RegexReader(regex) {
 RegexReader.prototype.begin = function() {
 	this.index = -1;
 	this.repeat = 1;
+	this.optional = undefined;
 	this.next();
 }
 
 RegexReader.prototype.next = function() {
 	if(--this.repeat !== 0) {
 		return;
-}
+	}
 
 	this.token = this.regex[++this.index];
 	if(this.token  === "\\") {
@@ -24,8 +25,14 @@ RegexReader.prototype.next = function() {
 	if(peek === "+") {
 		this.index++;
 		this.repeat = -1;
+		this.optional = false;
+	} else if(peek === "?") {
+		this.index++;
+		this.repeat = 1;
+		this.optional = true;
 	} else {
 		this.repeat = 1;
+		this.optional = false;
 	}
 };
 
@@ -45,7 +52,7 @@ RegexReader.prototype.isMatch = function(char) {
 RegexReader.prototype.doMatch = function(char) {
 	var matched = this.isMatch(char);
 
-	if(!matched && this.repeat < 0) {
+	if(!matched && (this.optional || this.repeat < 0)) {
 		this.repeat = 1;
 		this.next();
 		matched = this.isMatch(char);

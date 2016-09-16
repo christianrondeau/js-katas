@@ -42,4 +42,12 @@ describe("Pooregex", function() {
 	it("can match repeated characters on whole string", function() {
 		expect(new Pooregex("a+").match("aaa")).toPoomatch(["aaa"]);
 	});
+
+	it("fails matching repeated characters when not present", function() {
+		expect(new Pooregex("b+").match("ac")).not.toPoomatch();
+	});
+
+	it("can match optional (?) characters", function() {
+		expect(new Pooregex("ab?c").match("ac")).toPoomatch(["ac"]);
+	});
 });
