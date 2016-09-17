@@ -48,22 +48,26 @@ class RegexReader {
 		return new modifiers.Single();
 	}
 
-	isMatchComplete(stringComplete) {
-		var complete = this.index === this.regex.length || (stringComplete && this.index === this.regex.length - 1 && this.modifier.repeat < 0);
-		return complete;
+	canContinue() {
+		return this.index < this.regex.length;
+	}
+
+	isMatchComplete() {
+		return !this.canContinue() || (this.index === this.regex.length - 1 && this.modifier.repeat < 0);
 	}
 
 	isMatch(char) {
-		return this.operator.isMatch(char);
+		var matched = this.operator.isMatch(char);
+		return matched;
 	}
 
 	doMatch(char) {
 		var matched = this.isMatch(char);
 
 		if(!matched && (this.modifier.optional || this.modifier.repeat < 0)) {
-			this.modifier = new modifiers.Single();
+			this.modifier = null;
 			this.next();
-			matched = this.isMatch(char);
+			return this.doMatch(char);
 		}
 
 		this.next();

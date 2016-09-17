@@ -21,8 +21,16 @@ class RepeatedModifier {
 	}
 }
 
+class WildcardModifier {
+	constructor() {
+			this.repeat = -1;
+			this.optional = true;
+	}
+}
+
 module.exports = {
 	"?": OptionalModifier,
 	"+": RepeatedModifier,
+	"*": WildcardModifier,
 	"Single": SingleModifier
 }

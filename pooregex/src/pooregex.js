@@ -15,7 +15,7 @@ class Pooregex {
 		while(stringReader.next()) {
 			if(this.regexReader.doMatch(stringReader.char)) {
 				m += stringReader.char;
-				if(this.regexReader.isMatchComplete(false)) {
+				if(!this.regexReader.canContinue()) {
 					break;
 				}
 			} else {
@@ -25,7 +25,7 @@ class Pooregex {
 				}
 			}
 		}
-		if(m && this.regexReader.isMatchComplete(true)) {
+		if(m && this.regexReader.isMatchComplete()) {
 			return {
 				success: true,
 				matches: [ m ]

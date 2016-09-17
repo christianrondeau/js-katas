@@ -52,4 +52,8 @@ describe("Pooregex", () => {
 	it("can match optional (?) characters", () => {
 		expect(new Pooregex("ab?c").match("ac")).toPoomatch(["ac"]);
 	});
+
+	it("can match wildcard (*) characters", () => {
+		expect(new Pooregex("ab*c*d").match("abbbd")).toPoomatch(["abbbd"]);
+	});
 });
