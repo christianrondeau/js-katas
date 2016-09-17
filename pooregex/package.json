@@ -1,14 +1,15 @@
 {
-  "name": "roman",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "pooregex",
+  "version": "0.0.1",
+  "description": "A poor regex implementation",
+  "main": "src/pooregex.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/.bin/eslint 'src/**/*.js' && node ./node_modules/jasmine/bin/jasmine.js"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Christian Rondeau",
+  "license": "MIT",
   "devDependencies": {
+    "eslint": "^3.5.0",
     "jasmine": "^2.4.1"
   }
 }
