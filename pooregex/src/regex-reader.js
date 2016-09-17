@@ -1,56 +1,7 @@
 "use strict";
 
-class SpecificCharOperator {
-	constructor(token) {
-		this.token = token;
-	}
-
-	isMatch(char) {
-		return char === this.token;
-	}
-}
-
-class AnyCharOperator {
-	constructor(token) {
-		this.token = token;
-	}
-
-	isMatch() {
-		return true;
-	}
-}
-
-var operators = {
-	".": AnyCharOperator,
-	"SpecificChar": SpecificCharOperator
-};
-
-class SingleModifier {
-	constructor() {
-			this.repeat = 1;
-			this.optional = false;
-	}
-}
-
-class OptionalModifier {
-	constructor() {
-			this.repeat = 1;
-			this.optional = true;
-	}
-}
-
-class RepeatedModifier {
-	constructor() {
-			this.repeat = -1;
-			this.optional = false;
-	}
-}
-
-var modifiers = {
-	"?": OptionalModifier,
-	"+": RepeatedModifier,
-	"Single": SingleModifier
-}
+var modifiers = require("./modifiers.js");
+var operators = require("./operators.js");
 
 class RegexReader {
 	constructor(regex) {
