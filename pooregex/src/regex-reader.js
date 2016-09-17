@@ -15,14 +15,42 @@ class AnyCharOperator {
 		this.token = token;
 	}
 
-	isMatch(char) {
+	isMatch() {
 		return true;
 	}
 }
 
 var operators = {
-	".": AnyCharOperator
+	".": AnyCharOperator,
+	"SpecificChar": SpecificCharOperator
 };
+
+class SingleModifier {
+	constructor() {
+			this.repeat = 1;
+			this.optional = false;
+	}
+}
+
+class OptionalModifier {
+	constructor() {
+			this.repeat = 1;
+			this.optional = true;
+	}
+}
+
+class RepeatedModifier {
+	constructor() {
+			this.repeat = -1;
+			this.optional = false;
+	}
+}
+
+var modifiers = {
+	"?": OptionalModifier,
+	"+": RepeatedModifier,
+	"Single": SingleModifier
+}
 
 class RegexReader {
 	constructor(regex) {
@@ -31,49 +59,46 @@ class RegexReader {
 
 	begin() {
 		this.index = -1;
-		this.repeat = 1;
-		this.optional = undefined;
 		this.next();
 	}
 
 	next() {
-		if(--this.repeat !== 0) {
+		if(this.modifier && --this.modifier.repeat !== 0) {
 			return;
 		}
 
 		this.operator = this.nextOperator();
-
-		var peek = this.regex[this.index + 1];
-
-		if(peek === "+") {
-			this.index++;
-			this.repeat = -1;
-			this.optional = false;
-		} else if(peek === "?") {
-			this.index++;
-			this.repeat = 1;
-			this.optional = true;
-		} else {
-			this.repeat = 1;
-			this.optional = false;
-		}
+		this.modifier = this.nextModifier();
 	}
 	
 	nextOperator() {
 		var token = this.regex[++this.index];
 		if(token  === "\\") {
-			return new SpecificCharOperator(this.regex[++this.index]);
+			return new operators.SpecificChar(this.regex[++this.index]);
 		}
-		var operatorCtor  = operators[token];
+
+		var operatorCtor = operators[token];
 		if(operatorCtor) {
 			return new operatorCtor();
 		}
 
-		return new SpecificCharOperator(token);
+		return new operators.SpecificChar(token);
+	}
+
+	nextModifier() {
+		var peek = this.regex[this.index + 1];
+
+		var modifierCtor = modifiers[peek];
+		if(modifierCtor) {
+			this.index++;
+			return new modifierCtor();
+		}
+		
+		return new modifiers.Single();
 	}
 
 	isMatchComplete(stringComplete) {
-		var complete = this.index === this.regex.length || (stringComplete && this.index === this.regex.length - 1 && this.repeat < 0);
+		var complete = this.index === this.regex.length || (stringComplete && this.index === this.regex.length - 1 && this.modifier.repeat < 0);
 		return complete;
 	}
 
@@ -84,8 +109,8 @@ class RegexReader {
 	doMatch(char) {
 		var matched = this.isMatch(char);
 
-		if(!matched && (this.optional || this.repeat < 0)) {
-			this.repeat = 1;
+		if(!matched && (this.modifier.optional || this.modifier.repeat < 0)) {
+			this.modifier = new modifiers.Single();
 			this.next();
 			matched = this.isMatch(char);
 		}
