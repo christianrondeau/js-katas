@@ -1,26 +1,19 @@
 "use strict";
 
-class SpecificCharOperator {
-	constructor(token) {
-		this.token = token;
+class Operator {
+	constructor(minchar, maxchar) {
+		this.minchar = minchar;
+		this.maxchar = maxchar;
 	}
 
 	isMatch(char) {
-		return char === this.token;
+		return char >= this.minchar && char <= this.maxchar;
 	}
 }
 
-class AnyCharOperator {
-	constructor(token) {
-		this.token = token;
-	}
-
-	isMatch() {
-		return true;
-	}
-}
-
-module.exports = {
-	".": AnyCharOperator,
-	"SpecificChar": SpecificCharOperator
+module.exports = function getOperator(token) {
+	if(token === ".") {
+		return new Operator(1, 999999);
+	}	
+	return new Operator(token, token);
 };

@@ -1,31 +1,31 @@
 "use strict";
 
 var StringReader = require("./string-reader");
-var RegexReader = require("./regex-reader");
+var RegexParser = require("./regex-parser");
 
 class Pooregex {
 	constructor(regex) {
-		this.regexReader = new RegexReader(regex);
+		this.regexParser = new RegexParser(regex);
 	}
 
 	match(value) {
 		var m = "";
 		var stringReader = new StringReader(value);
-		this.regexReader.begin();
+		this.regexParser.begin();
 		while(stringReader.next()) {
-			if(this.regexReader.doMatch(stringReader.char)) {
+			if(this.regexParser.doMatch(stringReader.char)) {
 				m += stringReader.char;
-				if(!this.regexReader.canContinue()) {
+				if(!this.regexParser.canContinue()) {
 					break;
 				}
 			} else {
-				this.regexReader.begin();
+				this.regexParser.begin();
 				if(m) {
 					m = "";	
 				}
 			}
 		}
-		if(m && this.regexReader.isMatchComplete()) {
+		if(m && this.regexParser.isMatchComplete()) {
 			return {
 				success: true,
 				matches: [ m ]

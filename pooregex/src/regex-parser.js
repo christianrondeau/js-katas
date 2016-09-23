@@ -1,9 +1,9 @@
 "use strict";
 
 var modifiers = require("./modifiers.js");
-var operators = require("./operators.js");
+var getOperator = require("./operators.js");
 
-class RegexReader {
+class RegexParser {
 	constructor(regex) {
 		this.regex = regex;
 	}
@@ -21,19 +21,14 @@ class RegexReader {
 		this.operator = this.nextOperator();
 		this.modifier = this.nextModifier();
 	}
-	
+
 	nextOperator() {
 		var token = this.regex[++this.index];
 		if(token  === "\\") {
-			return new operators.SpecificChar(this.regex[++this.index]);
+			token += this.regex[++this.index];
 		}
 
-		var operatorCtor = operators[token];
-		if(operatorCtor) {
-			return new operatorCtor();
-		}
-
-		return new operators.SpecificChar(token);
+		return getOperator(token);
 	}
 
 	nextModifier() {
@@ -44,7 +39,7 @@ class RegexReader {
 			this.index++;
 			return new modifierCtor();
 		}
-		
+
 		return new modifiers.Single();
 	}
 
@@ -64,10 +59,10 @@ class RegexReader {
 	doMatch(char) {
 		var matched = this.isMatch(char);
 
-		if(!matched && (this.modifier.optional || this.modifier.repeat < 0)) {
+		while(!matched && (this.modifier.optional || this.modifier.repeat < 0)) {
 			this.modifier = null;
 			this.next();
-			return this.doMatch(char);
+			matched = this.isMatch(char);
 		}
 
 		this.next();
@@ -75,4 +70,4 @@ class RegexReader {
 	}
 }
 
-module.exports = RegexReader;
+module.exports = RegexParser;
