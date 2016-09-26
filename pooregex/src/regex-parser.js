@@ -1,6 +1,6 @@
 "use strict";
 
-var modifiers = require("./modifiers.js");
+var applyModifier = require("./modifiers.js");
 var getOperator = require("./operators.js");
 
 class RegexParser {
@@ -14,16 +14,18 @@ class RegexParser {
 	}
 
 	next() {
-		if(this.modifier && --this.modifier.repeat !== 0) {
+		if(this.operator && this.operator.canMatchAgain()) {
 			return;
 		}
 
-		this.operator = this.nextOperator();
-		this.modifier = this.nextModifier();
+		this.operator = this.nextModifier(this.nextOperator());
 	}
 
 	nextOperator() {
 		var token = this.regex[++this.index];
+		if(typeof token === "undefined") {
+			return null;	
+		}
 		if(token  === "\\") {
 			token += this.regex[++this.index];
 		}
@@ -31,16 +33,14 @@ class RegexParser {
 		return getOperator(token);
 	}
 
-	nextModifier() {
+	nextModifier(operator) {
 		var peek = this.regex[this.index + 1];
 
-		var modifierCtor = modifiers[peek];
-		if(modifierCtor) {
+		if(applyModifier(operator, peek)) {
 			this.index++;
-			return new modifierCtor();
 		}
 
-		return new modifiers.Single();
+		return operator;
 	}
 
 	canContinue() {
@@ -48,7 +48,7 @@ class RegexParser {
 	}
 
 	isMatchComplete() {
-		return !this.canContinue() || (this.index === this.regex.length - 1 && this.modifier.repeat < 0);
+		return !this.canContinue() || (this.index === this.regex.length - 1 && this.operator.repeat < 0);
 	}
 
 	isMatch(char) {
@@ -59,9 +59,12 @@ class RegexParser {
 	doMatch(char) {
 		var matched = this.isMatch(char);
 
-		while(!matched && (this.modifier.optional || this.modifier.repeat < 0)) {
-			this.modifier = null;
+		while(!matched && (this.operator.optional || this.operator.repeat < 0)) {
+			this.operator = null;
 			this.next();
+			if(!this.operator) {
+				return false;
+			}
 			matched = this.isMatch(char);
 		}
 
